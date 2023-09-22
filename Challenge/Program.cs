@@ -6,6 +6,7 @@ using Challenge.Filters;
 using Challenge.Implementations;
 using Challenge.Middleware;
 using Challenge.Services;
+using Challenge.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Challenge
@@ -30,7 +31,8 @@ namespace Challenge
             // Add the custom exception filter globally.
             builder.Services.AddControllers(options =>
             {
-                options.Filters.Add<GlobalExceptionFilter>(); 
+                options.Filters.Add<GlobalExceptionFilter>();
+                options.Filters.Add<ModelValidationExceptionFilter>();
             });
 
             builder.Services.AddControllers();

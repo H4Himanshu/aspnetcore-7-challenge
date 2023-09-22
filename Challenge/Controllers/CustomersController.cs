@@ -1,6 +1,7 @@
 ﻿using Challenge.Contracts;
 using Challenge.Data.DTO;
 using Challenge.Data.Models;
+using Challenge.Filters;
 using Challenge.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -30,6 +31,19 @@ namespace Challenge.Controllers
             if (customerDto == null)
             {
                 return BadRequest("Invalid customer data.");
+            }
+
+            // Check if the ModelState is valid before proceeding with deserialization
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Validate the model
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(customerDto, new ValidationContext(customerDto), validationResults, true))
+            {
+                throw new InvalidModelStateException(validationResults);
             }
 
             // Call external API to generate profile image

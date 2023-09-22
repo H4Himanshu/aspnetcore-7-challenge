@@ -10,6 +10,7 @@ namespace Challenge.Data.DTO
         /// <value>The full name.</value>
         [Required(ErrorMessage = "Full name is required.")]
         [StringLength(100, ErrorMessage = "Full name must be between 1 and 100 characters.", MinimumLength = 1)]
+        [DataType(DataType.Text)]
         public string FullName { get; set; }
 
         /// <summary>Gets or sets the date of birth.</summary>
